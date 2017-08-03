@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Trivia game</title>
+
+  <!-- Added link to the jQuery Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+body, html {
+    height: 100%;
+    margin: 0;
+}
+.bg {
+    /* The image used */
+    background-image: url("download.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+</style>
+
+</head>
+
+<body>
+  <div class="bg row">
+    <div class="col-sm-12">
+      <h1 class="text-center">Trivial Game</h1>
+    
+      <div class="row">
+        
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-8" id="questionsButtons">
+        </div>
+        <div class="col-sm-2">
+
+        </div>
+
+  
+      </div>
+      <div class="row">
+        
+        <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-4" id="answersButtons">
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+
+  
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+    // This document.ready isn't necessary in this example... but is needed in cases where the HTML is complex.
+    // This code makes sure that the JavaScript doesn't get run until the HTML is finished loading
+    // It's useful to become familiar with now.
+
+
+      $(document).ready(function() {
+        var questions=["Who is the president of the US?","What does JS stand in sms?","What is the best Coding BootCamp?","100000 cents is equal to 100 dollars"];
+        var correctAnswers=["Donald Trump","Just Sayin","GW","false"];
+     
+        var answers=[
+                      q1=[
+                      "Donald Trump",
+                      "Barack Obama",
+                      "George Washington",
+                      "Michael Thomason"
+                      ],
+                      q2=[
+                      "Jack Stanley",
+                      "January Stop",
+                      "Just Sayin",
+                      "Javascript"
+                      ],
+                      q3=[
+                      "The Iron Yard",
+                      "Code Academy",
+                      "Coding Dojo",
+                      "GW"
+                      ],
+                      q4=[
+                      "false",
+                      "true"
+                      
+                      ],
+        ];
+
+        //  This code will run as soon as the page loads.
+window.onload = function() {
+
+  startgame();
+  var i;var answer;var correct;var wrong;
+   
+};
+
+    
+
+        function startgame(){
+           $("#answersButtons").empty();
+           i=0;correct=0;  wrong=0;
+
+          showquestion(i);
+
+
+
+        }
+
+        function showquestion(index){
+         document.getElementById("questionsButtons").innerHTML ="<button type='button' class='btn btn-default btn-lg btn-block disabled'>" + questions[index] + "</button>";
+
+         for(var j=0;j<answers[index].length;j++){
+//$("#answersButtons").append("<button type='button' class='btn btn-default btn-lg btn-block' >" + answers[index][j] + "</button>");
+//console.log(answers[index][j])
+ var a = $("<button type='button' class='btn btn-default btn-lg btn-block'>");
+  a.addClass("button" +j);
+        a.attr("id","button" +j);
+         a.text(answers[index][j]);
+          $("#answersButtons ").append(a);
+          
+         }
+
+     
+
+          }
+
+          function nextquestion(){
+  if(i==questions.length-1){
+     $("#answersButtons").empty();
+     $("#answersButtons").append("<button type='button' class='btn btn-default btn-lg btn-block' >" + 'You have ' + correct + ' correct answers!' + "</button>");
+     $("#answersButtons").append("<button type='button' class='btn btn-default btn-lg btn-block' >" + 'You have ' + wrong + ' wrong answers!' + "</button>");
+     setTimeout(alert("GAME OVER!"),5000);
+
+              setTimeout(startgame,7000);
+   }
+     else{
+              i++;
+            
+             $("#answersButtons").empty();
+            showquestion(i);
+     }
+            console.log(i);
+                }
+        
+ 
+            
+       
+            $('#answersButtons').on("click","#button0", function() {
+
+           answer=(document.getElementById("button0").innerHTML);
+console.log(i);
+console.log(answer);
+           if (answer==correctAnswers[i]){
+            alert("You are Correct!");
+            correct++;
+            
+           }
+           else{
+            alert("You are Incorrect!");
+            wrong++;
+           }
+           
+nextquestion();
+
+            })
+            $('#answersButtons').on("click","#button1", function() {
+
+          
+          answer=(document.getElementById("button1").innerHTML);
+          console.log(i);
+          console.log(answer);
+          if (answer==correctAnswers[i]){
+            alert("You are Correct!");
+            correct++;
+            
+           }
+           else{
+            alert("You are Incorrect!");
+            wrong++;
+           }
+
+nextquestion();
+
+
+            })
+            $('#answersButtons').on("click","#button2", function() {
+
+          
+          answer=(document.getElementById("button2").innerHTML);
+          console.log(i);
+          console.log(answer);
+          if (answer==correctAnswers[i]){
+            alert("You are Correct!");
+            correct++;
+            
+           }
+           else{
+            alert("You are Incorrect!");
+            wrong++;
+           }
+          
+nextquestion();
+
+
+            })
+            $('#answersButtons').on("click","#button3", function() {
+
+          
+          answer=(document.getElementById("button3").innerHTML);
+          console.log(i);
+          console.log(answer);
+          if (answer==correctAnswers[i]){
+            alert("You are Correct!");
+            correct++;
+            
+           }
+           else{
+            alert("You are Incorrect!");
+            wrong++;
+           }
+
+nextquestion();
+
+
+            })
+      });
+  
+
+</script>
+
+</body>
+
+</html>
