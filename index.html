@@ -26,6 +26,17 @@ body, html {
     background-repeat: no-repeat;
     background-size: cover;
 }
+#display {
+  font-family: monospace;
+  font-size: 120px;
+  color: red;
+
+  /* Typography */
+  text-align: center;
+
+  /* Visual */
+  
+}
 
 </style>
 
@@ -62,6 +73,17 @@ body, html {
 
   
       </div>
+      <div class = "row">
+      <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-4 " id="display">
+        00:00
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+      </div>
     </div>
   </div>
 
@@ -73,6 +95,68 @@ body, html {
 
 
       $(document).ready(function() {
+         var intervalId;
+
+//prevents the clock from being sped up unnecessarily
+var clockRunning = false;
+
+// Our stopwatch object
+var stopwatch = {
+
+  time: 0,
+
+  reset: function() {
+
+    stopwatch.time = 120;
+
+  },
+  start: function() {
+
+    // DONE: Use setInterval to start the count here and set the clock to running.
+    if (!clockRunning) {
+        intervalId = setInterval(stopwatch.count,1000);
+        clockRunning = true;
+    }
+  },
+  stop: function() {
+
+    // DONE: Use clearInterval to stop the count here and set the clock to not be running.
+    clearInterval(intervalId);
+    clockRunning = false;
+  },
+ 
+  count: function() {
+
+    // DONE: decrement time by 1, remember we cant use "this" here.
+    stopwatch.time--;
+console.log(stopwatch.time);
+    // DONE: Get the current time, pass that into the stopwatch.timeConverter function,
+    //       and save the result in a variable.
+    var converted = stopwatch.timeConverter(stopwatch.time);
+
+    // DONE: Use the variable we just created to show the converted time in the "display" div.
+
+    $("#display").html(converted);
+  },
+  timeConverter: function(t) {
+
+    var minutes = Math.floor(t / 60);
+    var seconds = t - (minutes * 60);
+
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+
+    if (minutes === 0) {
+      minutes = "00";
+    }
+    else if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+
+    return minutes + ":" + seconds;
+  }
+};
         var questions=["Who is the president of the US?","What does JS stand in sms?","What is the best Coding BootCamp?","100000 cents is equal to 100 dollars"];
         var correctAnswers=["Donald Trump","Just Sayin","GW","false"];
      
@@ -106,17 +190,20 @@ body, html {
 window.onload = function() {
 
   startgame();
-  var i;var answer;var correct;var wrong;
+  var i;var answer;var correct=0;var wrong=0;
+
    
 };
 
-    
+     
 
         function startgame(){
            $("#answersButtons").empty();
            i=0;correct=0;  wrong=0;
 
           showquestion(i);
+          stopwatch.reset();
+          stopwatch.start();
 
 
 
@@ -142,9 +229,10 @@ window.onload = function() {
 
           function nextquestion(){
   if(i==questions.length-1){
+    stopwatch.stop();
      $("#answersButtons").empty();
-     $("#answersButtons").append("<button type='button' class='btn btn-default btn-lg btn-block' >" + 'You have ' + correct + ' correct answers!' + "</button>");
-     $("#answersButtons").append("<button type='button' class='btn btn-default btn-lg btn-block' >" + 'You have ' + wrong + ' wrong answers!' + "</button>");
+     $("#answersButtons").append("<button type='button' class='btn btn-default btn-lg btn-block disabled' >" + 'You have ' + correct + ' correct answers!' + "</button>");
+     $("#answersButtons").append("<button type='button' class='btn btn-default btn-lg btn-block disabled' >" + 'You have ' + wrong + ' wrong answers!' + "</button>");
      setTimeout(alert("GAME OVER!"),5000);
 
               setTimeout(startgame,7000);
@@ -239,8 +327,9 @@ nextquestion();
 
 
             })
+
       });
-  
+ 
 
 </script>
 
