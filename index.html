@@ -107,15 +107,15 @@ var stopwatch = {
 
   reset: function() {
 
-    stopwatch.time = 120;
-
+    stopwatch.time = 10;
+ 
   },
   start: function() {
-
+ clockRunning = true;
     // DONE: Use setInterval to start the count here and set the clock to running.
-    if (!clockRunning) {
+    if (clockRunning) {
         intervalId = setInterval(stopwatch.count,1000);
-        clockRunning = true;
+       
     }
   },
   stop: function() {
@@ -123,12 +123,17 @@ var stopwatch = {
     // DONE: Use clearInterval to stop the count here and set the clock to not be running.
     clearInterval(intervalId);
     clockRunning = false;
+
   },
  
   count: function() {
 
     // DONE: decrement time by 1, remember we cant use "this" here.
     stopwatch.time--;
+    if (stopwatch.time==0){
+      wrong++;
+     nextquestion();
+    }
 console.log(stopwatch.time);
     // DONE: Get the current time, pass that into the stopwatch.timeConverter function,
     //       and save the result in a variable.
@@ -190,7 +195,7 @@ console.log(stopwatch.time);
 window.onload = function() {
 
   startgame();
-  var i;var answer;var correct=0;var wrong=0;
+  var i;var answer;var correct=0;var wrong=0; 
 
    
 };
@@ -202,6 +207,7 @@ window.onload = function() {
            i=0;correct=0;  wrong=0;
 
           showquestion(i);
+
           stopwatch.reset();
           stopwatch.start();
 
@@ -228,8 +234,11 @@ window.onload = function() {
           }
 
           function nextquestion(){
-  if(i==questions.length-1){
-    stopwatch.stop();
+             
+             
+  if(i==questions.length-1 ){
+   stopwatch.stop();
+   $("#questionsButtons").empty();
      $("#answersButtons").empty();
      $("#answersButtons").append("<button type='button' class='btn btn-default btn-lg btn-block disabled' >" + 'You have ' + correct + ' correct answers!' + "</button>");
      $("#answersButtons").append("<button type='button' class='btn btn-default btn-lg btn-block disabled' >" + 'You have ' + wrong + ' wrong answers!' + "</button>");
@@ -239,10 +248,16 @@ window.onload = function() {
    }
      else{
               i++;
-            
+            stopwatch.stop();
              $("#answersButtons").empty();
             showquestion(i);
-     }
+            stopwatch.reset();
+          stopwatch.start();
+
+            
+                 }
+
+
             console.log(i);
                 }
         
@@ -263,6 +278,7 @@ console.log(answer);
             alert("You are Incorrect!");
             wrong++;
            }
+
            
 nextquestion();
 
